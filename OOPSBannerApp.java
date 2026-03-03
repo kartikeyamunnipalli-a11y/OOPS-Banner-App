@@ -1,44 +1,21 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * OOPS Banner App
- * UC7 - Store Character Pattern in a Class
+ * UC8 - Use Map for Character Patterns and Render via Function
  * @author Kartik M
- * @version 7.0
+ * @version 8.0
  */
 
 public class OOPSBannerApp {
 
-    public static class CharacterPatternMap {
+    // Utility Method 1: Create and return the Map
+    public static Map<Character, String[]> buildCharacterMap() {
 
-        private final char character;
-        private final String[] pattern;
+        Map<Character, String[]> map = new HashMap<>();
 
-        public CharacterPatternMap(char character, String[] pattern) {
-            this.character = character;
-            this.pattern = pattern;
-        }
-
-        public char getCharacter() {
-            return character;
-        }
-
-        public String getPatternRow(int row) {
-            return pattern[row];
-        }
-    }
-
-    public static String buildBannerRow(int row, CharacterPatternMap[] characters) {
-        StringBuilder sb = new StringBuilder();
-
-        for (CharacterPatternMap cp : characters) {
-            sb.append(cp.getPatternRow(row)).append("   ");
-        }
-
-        return sb.toString();
-    }
-
-    public static void main(String[] args) {
-
-        CharacterPatternMap O = new CharacterPatternMap('O', new String[]{
+        map.put('O', new String[]{
                 " *****  ",
                 "*     * ",
                 "*     * ",
@@ -48,7 +25,7 @@ public class OOPSBannerApp {
                 " *****  "
         });
 
-        CharacterPatternMap P = new CharacterPatternMap('P', new String[]{
+        map.put('P', new String[]{
                 " ****** ",
                 "*     * ",
                 "*     * ",
@@ -58,7 +35,7 @@ public class OOPSBannerApp {
                 "*        "
         });
 
-        CharacterPatternMap S = new CharacterPatternMap('S', new String[]{
+        map.put('S', new String[]{
                 "  *****  ",
                 " *     * ",
                 " *        ",
@@ -68,10 +45,32 @@ public class OOPSBannerApp {
                 "  *****  "
         });
 
-        CharacterPatternMap[] bannerChars = { O, O, P, S };
+        return map;
+    }
 
-        for (int i = 0; i < 7; i++) {
-            System.out.println(buildBannerRow(i, bannerChars));
+    // Utility Method 2: Render Banner
+    public static void renderBanner(String message, Map<Character, String[]> map) {
+
+        for (int row = 0; row < 7; row++) {
+
+            StringBuilder sb = new StringBuilder();
+
+            for (char ch : message.toCharArray()) {
+                String[] pattern = map.get(ch);
+                sb.append(pattern[row]).append("   ");
+            }
+
+            System.out.println(sb.toString());
         }
+    }
+
+    // Main Method
+    public static void main(String[] args) {
+
+        Map<Character, String[]> characterMap = buildCharacterMap();
+
+        String message = "OOPS";
+
+        renderBanner(message, characterMap);
     }
 }
